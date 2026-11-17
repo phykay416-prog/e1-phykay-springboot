@@ -35,11 +35,11 @@ public class UserRepository {
     public boolean updateFullName(UUID id, String fullName){
         for(int i = 0; i < usersData.size();i++){
             User user = usersData.get(i);
-            if (user.id().equals(id)){
+            if (user.getId().equals(id)){
                 User updatedUser = new User(
-                        user.id(),
-                        user.username(),
-                        user.password(),
+                        user.getId(),
+                        user.getUsername(),
+                        user.getPassword(),
                         fullName
                 );
                 usersData.set(i, updatedUser);

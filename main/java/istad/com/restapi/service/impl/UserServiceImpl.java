@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
         public void deleteByid(@PathVariable UUID id){
             boolean isFound = userRepository.select()
                     .stream()
-                    .anyMatch(user-> user.id().equals(id));
+                    .anyMatch(user-> user.getId().equals(id));
             IO.println("User with" + id + "is found"+isFound);
             if(isFound)
-                userRepository.select().removeIf(user->user.id().equals(id));
+                userRepository.select().removeIf(user->user.getId().equals(id));
             else throw new RuntimeException("user not found");
 
 
@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
     public UserDto getByid(UUID id) {
         return userRepository.select()
                 .stream()
-                .filter(user->user.id().equals(id))
+                .filter(user->user.getId().equals(id))
                 .findFirst()
-                .map(user->new UserDto(user.id(), user.fullName()))
+                .map(user->new UserDto(user.getId(), user.getFullNam()))
                 .orElseThrow(()-> new RuntimeException("user not found"));
     }
     @Override
@@ -64,9 +64,9 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.select()
                 .stream()
-                .filter(user -> user.fullName().toLowerCase()
+                .filter(user -> user.getFullNam().toLowerCase()
                         .contains(keyword.toLowerCase()))
-                .map(user -> new UserDto(user.id(), user.fullName()))
+                .map(user -> new UserDto(user.getId(), user.getFullNam()))
                 .toList();
     }
 
@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.insert(user);
 
         return new UserDto(
-                savedUser.id(),
-                savedUser.fullName()
+                savedUser.getId(),
+                savedUser.getFullNam()
         );
     }
 }
